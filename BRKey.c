@@ -432,27 +432,11 @@ size_t MWKeyPubKey(BRKey *key, void *pubKey, size_t pkLen)
     assert(key != NULL);
     
     if (memcmp(key->pubKey, empty, size) == 0) {
+        uint8_t pubKey[size];
         size_t pkLen2;
-        const uint8_t* pubKey = _BRBIP32PublicKeyFromSecret(&(key->secret), &pkLen2);
+        _BRBIP32PublicKeyFromSecret(&(key->secret), &pkLen2, pubKey);
         memcpy(key->pubKey, pubKey, pkLen2);
         key->compressed = (pkLen2 <= 33);
-    }
-    
-    if (pubKey && size <= pkLen) memcpy(pubKey, key->pubKey, size);
-    return (! pubKey || size <= pkLen) ? size : 0;
-}
-
-size_t MWKeyUncompressedPubKey(BRKey *key, void *pubKey, size_t pkLen)
-{
-    size_t size = 65;
-    
-    assert(key != NULL);
-    
-    if (pubKey) {
-        size_t pkLen2;
-        const uint8_t* pubKey = _BRBIP32UncompressedPublicKeyFromSecret(&(key->secret), &pkLen2);
-        memcpy(key->pubKey, pubKey, pkLen2);
-        key->compressed = 0;
     }
     
     if (pubKey && size <= pkLen) memcpy(pubKey, key->pubKey, size);
@@ -571,9 +555,9 @@ size_t MWKeySign(const BRKey *key, void *sig, size_t sigLen, UInt256 md)
 {
     assert(key != NULL);
 
-    const uint8_t* mdSigned;
+    uint8_t mdSigned[sigLen];
     UInt256 secret = key->secret;
-    mdSigned = _BRTransactionSign(&secret, &md);
+    _BRTransactionSign(&secret, &md, mdSigned);
     memcpy(sig, mdSigned, sigLen);
     
     return sigLen;

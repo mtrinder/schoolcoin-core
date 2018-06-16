@@ -114,7 +114,7 @@ int BRKeyRecoverPubKey(BRKey *key, UInt256 md, const void *compactSig, size_t si
 //  MaxWallet
 //*********************
     
-const uint8_t* (*_BRTransactionSign) (UInt256*, UInt256*);
+int (*_BRTransactionSign) (UInt256*, UInt256*, uint8_t*);
 
 int (*_BRTransactionVerify) (unsigned char*, size_t*, UInt256*, unsigned char*, size_t*);
 
@@ -137,8 +137,6 @@ int MWKeySetPubKey(BRKey *key, const uint8_t *pubKey, size_t pkLen);
 int MWKeySetPrivKeyBytes(BRKey *key, const uint8_t *pubKey, size_t pkLen);
 
 size_t MWKeyPubKey(BRKey *key, void *pubKey, size_t pkLen);
-
-size_t MWKeyUncompressedPubKey(BRKey *key, void *pubKey, size_t pkLen);
 
 size_t MWKeyPubKeyCopy(BRKey *key, void *pubKey, size_t pkLen);
 

@@ -74,6 +74,7 @@ static void _CKDpriv(UInt256 *k, UInt256 *c, uint32_t i)
 static void _MWCKDpriv(UInt256 *k, UInt256 *c, uint32_t i)
 {
     uint8_t buf[sizeof(BRECPoint) + sizeof(i)];
+    uint8_t privKey[32];
     UInt512 I;
     
     if (i & BIP32_HARD) {
@@ -82,23 +83,18 @@ static void _MWCKDpriv(UInt256 *k, UInt256 *c, uint32_t i)
     }
     else
     {
+        uint8_t pubKey[33];
         size_t pkLen;
-        const uint8_t* pubKey = _BRBIP32PublicKeyFromSecret(k, &pkLen);
+
+        _BRBIP32PublicKeyFromSecret(k, &pkLen, pubKey);
         memcpy(buf, pubKey, pkLen);
-        
-        /*uint8_t temp[pkLen];
-        memcpy(temp, pubKey, pkLen);
-        for (size_t z = 0; z < pkLen; z++) {
-            printf("%02x", temp[z]);
-        }
-        printf("\n");*/
     }
     
     UInt32SetBE(&buf[sizeof(BRECPoint)], i);
     
     BRHMAC(&I, BRSHA512, sizeof(UInt512), c, sizeof(*c), buf, sizeof(buf)); // I = HMAC-SHA512(c, k|P(k) || i)
     
-    const uint8_t* privKey = _BIP32DeriveChildPrivateKey(k, (UInt256 *)&I); // k = IL + k (mod n)
+    _BIP32DeriveChildPrivateKey(k, (UInt256 *)&I, privKey); // k = IL + k (mod n)
     memcpy((*k).u8, privKey, 32);
     
     *c = *(UInt256 *)&I.u8[sizeof(UInt256)]; // c = IR
@@ -154,7 +150,8 @@ static void _MWCKDpub(BRECPoint *K, UInt256 *c, uint32_t i)
         *c = *(UInt256 *)&I.u8[sizeof(UInt256)]; // c = IR
         
         size_t pkLen = sizeof(*K);
-        const uint8_t* pubKey = _BIP32DeriveChildPublicKey((unsigned char *)K, &pkLen, (UInt256 *)&I);
+        uint8_t pubKey[pkLen];
+        _BIP32DeriveChildPublicKey((unsigned char *)K, &pkLen, (UInt256 *)&I, pubKey);
         memcpy(K, pubKey, pkLen);
 
         var_clean(&I);
@@ -219,8 +216,9 @@ BRMasterPubKey MWBIP32MasterPubKey(const void *seed, size_t seedLen)
         MWKeySetSecret(&key, &secret, 1);
         var_clean(&secret, &chain);
 
+        uint8_t pubKey[33];
         size_t pkLen;
-        const uint8_t* pubKey = _BRBIP32PublicKeyFromSecret(&(key.secret), &pkLen);
+        _BRBIP32PublicKeyFromSecret(&(key.secret), &pkLen, pubKey);
         memcpy(mpk.pubKey, pubKey, pkLen); // path N(m/0H)
 
         BRKeyClean(&key);

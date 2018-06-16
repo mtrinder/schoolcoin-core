@@ -101,13 +101,11 @@ void BRBIP32BitIDKey(BRKey *key, const void *seed, size_t seedLen, uint32_t inde
 //  MaxWallet
 //*********************
 
-const uint8_t* (*_BRBIP32PublicKeyFromSecret) (UInt256*, size_t*);
+int (*_BRBIP32PublicKeyFromSecret) (UInt256*, size_t*, uint8_t*);
 
-const uint8_t* (*_BRBIP32UncompressedPublicKeyFromSecret) (UInt256*, size_t*);
-    
-const uint8_t* (*_BIP32DeriveChildPrivateKey) (UInt256*, UInt256*);
-    
-const uint8_t* (*_BIP32DeriveChildPublicKey)(unsigned char * k, size_t* len, UInt256* i);
+int (*_BIP32DeriveChildPrivateKey) (UInt256*, UInt256*, uint8_t*);
+
+int (*_BIP32DeriveChildPublicKey) (unsigned char * k, size_t* len, UInt256* i, uint8_t*);
 
 //*********************
 
