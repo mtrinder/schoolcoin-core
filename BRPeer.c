@@ -75,7 +75,7 @@
 // - local peer sends getheaders
 // - remote peer responds with up to 2000 headers
 // - local peer immediately sends getheaders again and then processes the headers
-// - previous two steps repeat until a header within 2 days of earliestKeyTime is reached (further headers are ignored)
+// - previous two steps repeat until a header within 7 days of earliestKeyTime is reached (further headers are ignored)
 // - local peer sends getblocks
 // - remote peer responds with inv containing up to 500 block hashes
 // - local peer sends getdata with the block hashes
@@ -471,7 +471,7 @@ static int _BRPeerAcceptHeadersMessage(BRPeer *peer, const uint8_t *msg, size_t 
         // headers immediately, and switch to requesting blocks when we receive a header newer than earliestKeyTime
         uint32_t timestamp = (count > 0) ? UInt32GetLE(&msg[off + 81*(count - 1) + 68]) : 0;
     
-        if (count >= 2000 || (timestamp > 0 && timestamp + 2*24*60*60 + BLOCK_MAX_TIME_DRIFT >= ctx->earliestKeyTime)) {
+        if (count >= 2000 || (timestamp > 0 && timestamp + 7*24*60*60 + BLOCK_MAX_TIME_DRIFT >= ctx->earliestKeyTime)) {
             size_t last = 0;
             time_t now = time(NULL);
             UInt256 locators[2];
@@ -479,11 +479,11 @@ static int _BRPeerAcceptHeadersMessage(BRPeer *peer, const uint8_t *msg, size_t 
             MWKeccak256(locators[0].u8, &msg[off + 81*(count - 1)], 80);
             MWKeccak256(locators[1].u8, &msg[off], 80);
             
-            if ((timestamp > 0 && timestamp + 2*24*60*60 + BLOCK_MAX_TIME_DRIFT >= ctx->earliestKeyTime) || ctx->isRescanning(ctx->info)) {
+            if ((timestamp > 0 && timestamp + 7*24*60*60 + BLOCK_MAX_TIME_DRIFT >= ctx->earliestKeyTime) || ctx->isRescanning(ctx->info)) {
                 // request blocks for the remainder of the chain
                 timestamp = (++last < count) ? UInt32GetLE(&msg[off + 81*last + 68]) : 0;
 
-                while (timestamp > 0 && timestamp + 2*24*60*60 + BLOCK_MAX_TIME_DRIFT < ctx->earliestKeyTime) {
+                while (timestamp > 0 && timestamp + 7*24*60*60 + BLOCK_MAX_TIME_DRIFT < ctx->earliestKeyTime) {
                     timestamp = (++last < count) ? UInt32GetLE(&msg[off + 81*last + 68]) : 0;
                 }
                 

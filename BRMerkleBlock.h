@@ -33,7 +33,6 @@
 extern "C" {
 #endif
 
-#define BLOCK_SAVE_COUNT          4000 // number of blocks to save after sync completes
 #define BLOCK_DIFFICULTY_INTERVAL 2016 // number of blocks between difficulty target adjustments
 #define BLOCK_UNKNOWN_HEIGHT      INT32_MAX
 #define BLOCK_MAX_TIME_DRIFT      (2*60*60) // the furthest in the future a block is allowed to be timestamped
