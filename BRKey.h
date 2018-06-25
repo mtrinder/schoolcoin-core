@@ -111,7 +111,7 @@ int BRKeyRecoverPubKey(BRKey *key, UInt256 md, const void *compactSig, size_t si
 
     
 //*********************
-//  MaxWallet
+//  Maxcoin Wallet
 //*********************
     
 int (*_BRTransactionSign) (UInt256*, UInt256*, uint8_t*);
