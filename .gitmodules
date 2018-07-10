@@ -1,6 +1,6 @@
 [submodule "schnorr"]
 	path = schnorr
-	url = https://github.com/mtrinder/schnorr.git
+url=https://github.com/mtrinder/secp256r1-schnorr.git
 [submodule "secp256k1"]
 	path = secp256k1
 	url = https://github.com/bitcoin-core/secp256k1.git
