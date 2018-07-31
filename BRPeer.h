@@ -4,8 +4,6 @@
 //  Created by Aaron Voisine on 9/2/15.
 //  Copyright (c) 2015 breadwallet LLC.
 //
-//  Changed protocol port to MaxCoin on 02/26/18 by null3128
-//
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -55,9 +53,9 @@ extern "C" {
 #endif
 
 #if BITCOIN_TESTNET
-#define STANDARD_PORT 18668
+#define STANDARD_PORT 18442
 #else
-#define STANDARD_PORT 8668
+#define STANDARD_PORT 8442
 #endif
 
 #define SERVICES_NODE_NETWORK 0x01 // services value indicating a node carries full blocks, not just headers
@@ -65,7 +63,7 @@ extern "C" {
 #define SERVICES_NODE_BCASH   0x20 // https://github.com/Bitcoin-UAHF/spec/blob/master/uahf-technical-spec.md
     
 #define BR_VERSION "0.9.4.1"
-#define USER_AGENT "/Max:" BR_VERSION "/"
+#define USER_AGENT "/Sch:" BR_VERSION "/"
 
 // explanation of message types at: https://en.bitcoin.it/wiki/Protocol_specification
 #define MSG_VERSION     "version"

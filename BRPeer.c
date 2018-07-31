@@ -4,7 +4,7 @@
 //  Created by Aaron Voisine on 9/2/15.
 //  Copyright (c) 2015 breadwallet LLC.
 //
-//  Changed magic to MaxCoin on 02/26/18
+//  Changed magic to Schoolcoin on 02/26/18
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -46,9 +46,9 @@
 #include <arpa/inet.h>
 
 #if BITCOIN_TESTNET
-#define MAGIC_NUMBER 0x07bb110b // MaxCoin TestNet
+#define MAGIC_NUMBER 0x07bb110b // Schoolcoin TestNet
 #else
-#define MAGIC_NUMBER 0xd2bbbef9 // MaxCoin MainNet
+#define MAGIC_NUMBER 0x05c507b4 // Schoolcoin MainNet
 #endif
 #define HEADER_LENGTH      24
 #define MAX_MSG_LENGTH     0x02000000
@@ -197,7 +197,7 @@ static int _BRPeerAcceptVersionMessage(BRPeer *peer, const uint8_t *msg, size_t 
         peer->timestamp = UInt64GetLE(&msg[off]);
         off += sizeof(uint64_t);
         
-        UInt32GetLE(&msg[off]); // padding for nTime (see maxcoind (full node peer) class CAddress)
+        UInt32GetLE(&msg[off]); // padding for nTime (see schoolcoind (full node peer) class CAddress)
         off += sizeof(uint32_t);
 
         recvServices = UInt64GetLE(&msg[off]);
@@ -207,7 +207,7 @@ static int _BRPeerAcceptVersionMessage(BRPeer *peer, const uint8_t *msg, size_t 
         recvPort = UInt16GetBE(&msg[off]);
         off += sizeof(uint16_t);
         
-        UInt32GetLE(&msg[off]); // padding for nTime (see maxcoind (full node peer) class CAddress)
+        UInt32GetLE(&msg[off]); // padding for nTime (see schoolcoind (full node peer) class CAddress)
         off += sizeof(uint32_t);
 
         fromServices = UInt64GetLE(&msg[off]);
@@ -1320,7 +1320,7 @@ void BRPeerSendVersionMessage(BRPeer *peer)
     UInt64SetLE(&msg[off], time(NULL)); // timestamp
     off += sizeof(uint64_t);
     
-    UInt32SetLE(&msg[off], 0); // padding for nTime (see maxcoind (full node peer) class CAddress)
+    UInt32SetLE(&msg[off], 0); // padding for nTime (see schoolcoind (full node peer) class CAddress)
     off += sizeof(uint32_t);
 
     UInt64SetLE(&msg[off], peer->services); // services of remote peer
@@ -1330,7 +1330,7 @@ void BRPeerSendVersionMessage(BRPeer *peer)
     UInt16SetBE(&msg[off], peer->port); // port of remote peer
     off += sizeof(uint16_t);
 
-    UInt32SetLE(&msg[off], 0); // padding for nTime (see maxcoind (full node peer) class CAddress)
+    UInt32SetLE(&msg[off], 0); // padding for nTime (see schoolcoind (full node peer) class CAddress)
     off += sizeof(uint32_t);
     
     UInt64SetLE(&msg[off], ENABLED_SERVICES); // services

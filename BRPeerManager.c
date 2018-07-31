@@ -63,26 +63,12 @@ static const char *dns_seeds[] = {
 // blockchain checkpoints - these are also used as starting points for partial chain downloads, so they need to be at
 // difficulty transition boundaries in order to verify the block difficulty at the immediately following transition
 static const struct { uint32_t height; const char *hash; uint32_t timestamp; uint32_t target; } checkpoint_array[] = {
-    {       0,  "0000002d0f86558a6e737a3a351043ee73906fe077692dfaa3c9328aaca21964", 1390822264, 0x1e00ffff },
-    {   26208,  "0000000000007c167c23719472c2ef100c0c7e988cf1b2d2818908a2e13b638d", 1392500144, 0x1b008528 },
-    {  110880,  "0000000000003e5611660ed8714093e9dc4c7db4884c55d8552a58feecc8ea28", 1395058829, 0x1b0280ec },
-    {  558432,  "000000000002c088b77ee597790324f3849a5f6fa01b51e3d73b933d4fcdbf2f", 1408658999, 0x1b046611 },
-    {  631008,  "0000000000229604b0ac9582f85fe1c8ecd6ead60106df6be86b43bafbb433a2", 1410911245, 0x1b2eb96c },
-    {  975744,  "000000000007e21f6d0767d2e3e4c439e239e580a8a07f3ce4f1e141daad1989", 1431980344, 0x1b12fbfe },
-    {  1499904, "0000000000045f1ecca88baf24916d96129294344c6caac5498dfc46b6073f3e", 1463683587, 0x1b583ee4 },
-    {  1749888, "00000000000f3729e2e21310e5aa8c06474e331c7d3da21e5b19c11787615c90", 1478820276, 0x1b589af6 },
-    {  1874880, "0000000000fcd11aa2e49d933838e67b8bc8a42982440396a7a8a023dff4a04b", 1486399702, 0x1c01219e },
-    {  2001888, "000000000497938474d295c440fcc825b009420bab5241b8b48f3e5e3c8ef51b", 1494104183, 0x1c0820ff },
-    {  2253888, "00000000001035f9b5cf6531fe29348da601468b361f0ed874886bc7bd2792d9", 1509697218, 0x1b2cc7f8 },
-    {  2354688, "00000000002aa412fb6869d3ce2de5b30c8d525e1393e97e3e6bcf055093eb07", 1516049630, 0x1b2c2dcd },
-    {  2501856, "000000000002ec65b4031ea30c36a5e7982ee02625e6ca14b1c00231fe43bbf1", 1525032938, 0x1b060e76 },
-    {  2523456, "0000000000019c2129d0412747585ff0047f87da5fec1463a299507d7108ecc8", 1526344029, 0x1b04bc1e }
+    {       0,  "000000af55d94af949acb7587bb4e1dd75da95dc54431498b949d43d49386346", 1530854341, 0x1e00ffff }
 };
 
 static const char *dns_seeds[] = {
-    //"127.0.0.1"//,// for debuging local Maxcoin-Qt
-    "a.seed.maxcoinproject.net",
-    "b.seed.maxcoinproject.net"
+    //"127.0.0.1"//,// for debuging local Schoolcoin-Qt
+    "dnsseed.school-coin.org"
 };
 
 #endif
@@ -1598,13 +1584,13 @@ BRPeerManager *BRPeerManagerNew(BRWallet *wallet, uint32_t earliestKeyTime, BRMe
         block->height = checkpoint_array[i].height;
         block->blockHash = UInt256Reverse(u256_hex_decode(checkpoint_array[i].hash));
 
-        if (i == 0) {
+        /*if (i == 0) {
             // Genesis block hash (returned from full node) has an extra byte
             // So we need to add it to our check point to start syncing correctly
             for (int i=30; i>=0; i--)
                 block->blockHash.u8[i+1] = block->blockHash.u8[i];
             block->blockHash.u8[0] = 'd';
-        }
+        }*/
         
         block->timestamp = checkpoint_array[i].timestamp;
         block->target = checkpoint_array[i].target;
