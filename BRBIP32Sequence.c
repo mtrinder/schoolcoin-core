@@ -190,7 +190,7 @@ BRMasterPubKey BRBIP32MasterPubKey(const void *seed, size_t seedLen)
     return mpk;
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 BRMasterPubKey MWBIP32MasterPubKey(const void *seed, size_t seedLen)
 {
     BRMasterPubKey mpk = BR_MASTER_PUBKEY_NONE;
@@ -246,7 +246,7 @@ size_t BRBIP32PubKey(uint8_t *pubKey, size_t pubKeyLen, BRMasterPubKey mpk, uint
     return (! pubKey || sizeof(BRECPoint) <= pubKeyLen) ? sizeof(BRECPoint) : 0;
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 size_t MWBIP32PubKey(uint8_t *pubKey, size_t pubKeyLen, BRMasterPubKey mpk, uint32_t chain, uint32_t index)
 {
     UInt256 chainCode = mpk.chainCode;
@@ -270,7 +270,7 @@ void BRBIP32PrivKey(BRKey *key, const void *seed, size_t seedLen, uint32_t chain
     BRBIP32PrivKeyPath(key, seed, seedLen, 3, 0 | BIP32_HARD, chain, index);
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 void MWBIP32PrivKey(BRKey *key, const void *seed, size_t seedLen, uint32_t chain, uint32_t index)
 {
     MWBIP32PrivKeyPath(key, seed, seedLen, 3, 0 | BIP32_HARD, chain, index);
@@ -307,7 +307,7 @@ void BRBIP32PrivKeyList(BRKey keys[], size_t keysCount, const void *seed, size_t
     }
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 void MWBIP32PrivKeyList(BRKey keys[], size_t keysCount, const void *seed, size_t seedLen, uint32_t chain, const uint32_t indexes[])
 {
     UInt512 I;
@@ -348,7 +348,7 @@ void BRBIP32PrivKeyPath(BRKey *key, const void *seed, size_t seedLen, int depth,
     va_end(ap);
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 void MWBIP32PrivKeyPath(BRKey *key, const void *seed, size_t seedLen, int depth, ...)
 {
     va_list ap;
@@ -384,7 +384,7 @@ void BRBIP32vPrivKeyPath(BRKey *key, const void *seed, size_t seedLen, int depth
     }
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 void MWBIP32vPrivKeyPath(BRKey *key, const void *seed, size_t seedLen, int depth, va_list vlist)
 {
     UInt512 I;
@@ -446,7 +446,7 @@ void BRBIP32APIAuthKey(BRKey *key, const void *seed, size_t seedLen)
     BRBIP32PrivKeyPath(key, seed, seedLen, 2, 1 | BIP32_HARD, 0);
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 void MWBIP32APIAuthKey(BRKey *key, const void *seed, size_t seedLen)
 {
     BRBIP32PrivKeyPath(key, seed, seedLen, 2, 1 | BIP32_HARD, 0);
@@ -473,7 +473,7 @@ void BRBIP32BitIDKey(BRKey *key, const void *seed, size_t seedLen, uint32_t inde
     }
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 void MWBIP32BitIDKey(BRKey *key, const void *seed, size_t seedLen, uint32_t index, const char *uri)
 {
     assert(key != NULL);

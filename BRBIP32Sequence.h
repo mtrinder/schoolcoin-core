@@ -98,7 +98,7 @@ void BRBIP32APIAuthKey(BRKey *key, const void *seed, size_t seedLen);
 void BRBIP32BitIDKey(BRKey *key, const void *seed, size_t seedLen, uint32_t index, const char *uri);
 
 //*********************
-//  Maxcoin Wallet
+//  SchoolKoin Wallet
 //*********************
 
 int (*_BRBIP32PublicKeyFromSecret) (UInt256*, size_t*, uint8_t*);

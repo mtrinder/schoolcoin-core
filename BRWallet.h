@@ -200,7 +200,7 @@ int64_t BRLocalAmount(int64_t amount, double price);
 int64_t BRBitcoinAmount(int64_t localAmount, double price);
 
 //*********************
-//  Maxcoin Wallet
+//  SchoolKoin Wallet
 //*********************
 
 int MWWalletSignTransaction(BRWallet *wallet, BRTransaction *tx, int forkId, const void *seed, size_t seedLen);

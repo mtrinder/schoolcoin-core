@@ -72,7 +72,7 @@ int BRSecp256k1ModAdd(UInt256 *a, const UInt256 *b)
     return secp256k1_ec_privkey_tweak_add(_ctx, (unsigned char *)a, (const unsigned char *)b);
 }
 
-// only used in BIP38 implementation - Maxcoin Wallet doesn't use BIP38
+// only used in BIP38 implementation - SchoolKoin Wallet doesn't use BIP38
 //
 // multiplies 256bit big endian ints a and b (mod secp256k1 order) and stores the result in a
 // returns true on success
@@ -161,7 +161,7 @@ int BRPrivKeyIsValid(const char *privKey)
     return r;
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 int MWPrivKeyIsValid(const char *privKey)
 {
     uint8_t data[34];
@@ -208,7 +208,7 @@ int BRKeySetSecret(BRKey *key, const UInt256 *secret, int compressed)
     return secp256k1_ec_seckey_verify(_ctx, key->secret.u8);
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 int MWKeySetSecret(BRKey *key, const UInt256 *secret, int compressed)
 {
     assert(key != NULL);
@@ -263,7 +263,7 @@ int BRKeySetPrivKey(BRKey *key, const char *privKey)
     return r;
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 int MWKeySetPrivKey(BRKey *key, const char *privKey)
 {
     size_t len = strlen(privKey);
@@ -321,7 +321,7 @@ int BRKeySetPubKey(BRKey *key, const uint8_t *pubKey, size_t pkLen)
     return secp256k1_ec_pubkey_parse(_ctx, &pk, key->pubKey, pkLen);
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 int MWKeySetPubKey(BRKey *key, const uint8_t *pubKey, size_t pkLen)
 {
     assert(key != NULL);
@@ -358,7 +358,7 @@ size_t BRKeyPrivKey(const BRKey *key, char *privKey, size_t pkLen)
     return pkLen;
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 size_t MWKeyPrivKey(const BRKey *key, char *privKey, size_t pkLen)
 {
     uint8_t data[34];
@@ -423,7 +423,7 @@ size_t BRKeyPubKey(BRKey *key, void *pubKey, size_t pkLen)
     return (! pubKey || size <= pkLen) ? size : 0;
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 size_t MWKeyPubKey(BRKey *key, void *pubKey, size_t pkLen)
 {
     static uint8_t empty[65]; // static vars initialize to zero
@@ -467,7 +467,7 @@ UInt160 BRKeyHash160(BRKey *key)
     return hash;
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 UInt160 MWKeyHash160(BRKey *key)
 {
     UInt160 hash = UINT160_ZERO;
@@ -503,7 +503,7 @@ size_t BRKeyAddress(BRKey *key, char *addr, size_t addrLen)
     return addrLen;
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 size_t MWKeyAddress(BRKey *key, char *addr, size_t addrLen)
 {
     UInt160 hash;
@@ -550,7 +550,7 @@ size_t BRKeySign(const BRKey *key, void *sig, size_t sigLen, UInt256 md)
     return sigLen;
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 size_t MWKeySign(const BRKey *key, void *sig, size_t sigLen, UInt256 md)
 {
     assert(key != NULL);
@@ -585,7 +585,7 @@ int BRKeyVerify(BRKey *key, UInt256 md, const void *sig, size_t sigLen)
     return r;
 }
 
-// Maxcoin Wallet version
+// SchoolKoin Wallet version
 int MWKeyVerify(BRKey *key, UInt256 md, unsigned char *sig, size_t sigLen)
 {
     size_t len;
