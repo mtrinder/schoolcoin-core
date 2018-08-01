@@ -1583,15 +1583,6 @@ BRPeerManager *BRPeerManagerNew(BRWallet *wallet, uint32_t earliestKeyTime, BRMe
         block = BRMerkleBlockNew();
         block->height = checkpoint_array[i].height;
         block->blockHash = UInt256Reverse(u256_hex_decode(checkpoint_array[i].hash));
-
-        /*if (i == 0) {
-            // Genesis block hash (returned from full node) has an extra byte
-            // So we need to add it to our check point to start syncing correctly
-            for (int i=30; i>=0; i--)
-                block->blockHash.u8[i+1] = block->blockHash.u8[i];
-            block->blockHash.u8[0] = 'd';
-        }*/
-        
         block->timestamp = checkpoint_array[i].timestamp;
         block->target = checkpoint_array[i].target;
         BRSetAdd(manager->checkpoints, block);
